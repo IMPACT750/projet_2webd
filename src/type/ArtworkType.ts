@@ -24,7 +24,7 @@ interface Tag {
     Wikidata_URL: string;
 }
 
-export type Artwork = {
+export type ArtworkDetail = {
     objectID: number;
     isHighlight: boolean;
     accessionNumber: string;
@@ -86,11 +86,3 @@ export type Artwork = {
 
 // type departement
 
-interface Department {
-    departmentId: number;
-    displayName: string;
-}
-
-export type DepartmentData = {
-    departments: Department[];
-}
