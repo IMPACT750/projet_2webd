@@ -1,49 +1,52 @@
+import { useArtworkQuery } from "../../queries/Artwork/useArtwork";
 import { ArtworkDetail } from "../../type/ArtworkType";
-import { useArtworkQuery} from "../../queries/Artwork/useArtwork";
 import styles from "./ArtworkCard.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-interface Artwork {
-  ArtworkId : number;
+interface ArtworkProps {
+  ArtworkId: number;
 }
 
-export function ArtworkCard(props: Artwork) {
-  const [isOvered, setIsOvered] = useState(false);
+export function ArtworkCard(props: ArtworkProps) {
+    const [isOvered, setIsOvered] = useState(false);
+    const [Artwork, setArtwork] = useState<ArtworkDetail | undefined>();
 
-  const artwork = useArtworkQuery(props.ArtworkId);
+    const artwork = useArtworkQuery(props.ArtworkId);
 
-  if (artwork.isLoading) {
-    return <div>Chargement...</div>;
-  }
+    useEffect(() => {
+      setArtwork(artwork.data);
+    }, [artwork.data]);
 
-  if (artwork.isError) {
-    return <div>Erreur</div>;
-  }
+    if (artwork.isLoading) {
+      return <div>Chargement...</div>;
+    }
 
-  const Artwork = artwork.data!.Artwork as ArtworkDetail;
+    if (artwork.isError) {
+      return <div>Error: Artwork not found</div>;
+    }
 
+    return (
 
-  return (
-    <div
-      className={styles.artwork}
-      onMouseOver={() => setIsOvered(true)}
-      onMouseOut={() => setIsOvered(false)}
-      style={{
-        backgroundColor: isOvered
-          ? "rgba(105, 105, 105, 0.633)"
-          : "transparent",
-      }}
-    >
-      <img src={Artwork.primaryImage} alt={Artwork.title} className={styles.img} />
-      <div >
-        <h2>{Artwork.title}</h2>
-        <p>{Artwork.artistDisplayName}</p>
-        <p>{Artwork.objectDate}</p>
-        <p>{Artwork.medium}</p>
-        <p>{Artwork.dimensions}</p>
-        <p>{Artwork.creditLine}</p>
-        <p>{Artwork.department}</p>
+      <div
+        
+        onMouseOver={() => setIsOvered(true)}
+        onMouseOut={() => setIsOvered(false)}
+        style={{
+          backgroundColor: isOvered
+            ? "rgba(105, 105, 105, 0.633)"
+            : "transparent",
+        }}
+      >
+          <img src={Artwork?.primaryImageSmall} alt={Artwork?.title} className={styles.img} />
+        <div>
+          <h2>{Artwork?.title}</h2>
+          <p>{Artwork?.artistDisplayName}</p>
+          <p>{Artwork?.objectDate}</p>
+          <p>{Artwork?.medium}</p>
+          <p>{Artwork?.dimensions}</p>
+          <p>{Artwork?.creditLine}</p>
+          <p>{Artwork?.department}</p>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
