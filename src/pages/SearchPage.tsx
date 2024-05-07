@@ -1,13 +1,15 @@
 import { ArtworkCard } from "../components/ArtworkCard/ArtworkCard";
-import { useArtworkIdisHighlightQuery } from "../queries/Artwork/useArtworkIdisHighlight";
 import { useState, useEffect } from "react";
 import { Pagination, Grid, Typography, Box } from "@mui/material";
+import { useSearchQuery } from "../queries/Artwork/useSearch";
+import { useParams } from "react-router-dom";
 
-export function ArtworkListPage() {
+export function SearchPage() {
+    const queries = useParams();
   const [ArtorkIdUse, setArtorkIdUse] = useState<number[]>([]);
   const [offset, setOffset] = useState(0);
   const limit = 9;
-  const ArtworkIds = useArtworkIdisHighlightQuery();
+  const ArtworkIds = useSearchQuery(queries.searchTerm!);
 
   useEffect(() => {
     if (ArtworkIds.isLoading) {
@@ -44,7 +46,7 @@ export function ArtworkListPage() {
 
       <Grid container spacing={3} wrap="wrap" marginTop="4rem">
         {ArtorkIdUse.map((id) => (
-          <Grid item xs={12} sm={6} md={4} key={id}>
+          <Grid item xs={12} sm={8} md={4} key={id}>
               <Box height="100%" display="flex" alignItems="stretch">
                 <ArtworkCard ArtworkId={id} />
               </Box>

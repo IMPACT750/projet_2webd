@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 
 
+
 export function useArtworkQuery(objectId: number) {
     return useQuery({
       queryKey: ["Artwork", objectId],

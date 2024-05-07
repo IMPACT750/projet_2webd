@@ -7,16 +7,15 @@ interface ArtworkIdResponse {
 }
 
 
-export function useArtworkIdQuery() {
+export function useArtworkIdisHighlightQuery() {
   return useQuery({
     queryKey: ["ArtworkId"],
     queryFn: async () => {
-      const response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects`);
+      const response = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&q=van gogh`);
       const json = await response.json();
       return json as ArtworkIdResponse;
     },
   });
 }
-
 
 

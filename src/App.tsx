@@ -1,29 +1,33 @@
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
-import './App.css'
-import { ArtworkListPage } from './pages/ArtworkListPage'
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ArtworkListPage } from "./pages/ArtworkListPage";
+import { SearchAppBar } from "./components/Navbar";
+import { ArtworkDetailCard } from "./pages/ArtworkDetailPage";
+import { SearchPage } from "./pages/SearchPage"; // Import the SearchPage component
+import "./App.css";
+
 
 
 function App() {
-
   const router = createBrowserRouter([
     {
-      path: '/',
-      element:(
-      <>
-       <Outlet />
-       </>),
-      errorElement: <div>page non trouve</div>,
-
+      path: "/",
+      element: (
+        <>
+        <SearchAppBar />
+          <Outlet />
+        </>
+      ),
+      errorElement: <div>Page non trouvée</div>,
       children: [
-        { path: '/', element: <ArtworkListPage /> },
-        { path: 'about', element: <p>test</p> },
-        { path: 'contact', element: <p>test</p>  },
-      ]
-    }
+        { path: "/", element: <ArtworkListPage /> },
+        { path: "/:ArtworkId", element: <ArtworkDetailCard /> },
+        {path: "/search/:searchTerm", element: <SearchPage />
+        }
+      ],
+    },
+  ]);
 
-  ])
-
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
