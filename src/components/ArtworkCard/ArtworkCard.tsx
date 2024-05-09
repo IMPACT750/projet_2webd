@@ -1,18 +1,18 @@
-import {CardContent, Typography } from "@material-ui/core";
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useArtworkQuery } from "../../queries/Artwork/useArtwork";
 import { ArtworkDetail } from "../../type/ArtworkType";
 import styles from "./ArtworkCard.module.css";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 interface ArtworkProps {
   ArtworkId: number;
 }
 
-export function ArtworkCard(props: ArtworkProps) {
-  const [isOvered, setIsOvered] = useState(false);
+export function ArtworkCard({ ArtworkId }: ArtworkProps) {
+  const [isHovered, setIsHovered] = useState(false);
   const [Artwork, setArtwork] = useState<ArtworkDetail | undefined>();
-  const artwork = useArtworkQuery(props.ArtworkId);
+  const artwork = useArtworkQuery(ArtworkId);
 
   useEffect(() => {
     setArtwork(artwork.data);
@@ -22,45 +22,66 @@ export function ArtworkCard(props: ArtworkProps) {
     return <div>Chargement...</div>;
   }
 
-  if (artwork.isError) {
-    return <div>Error: Artwork not found</div>;
+  if (artwork.isError || !Artwork) {
+    return <div>Erreur : Œuvre d'art non trouvée</div>;
   }
 
+  const imageUrl = Artwork.primaryImageSmall
+    ? Artwork.primaryImageSmall
+    : "https://via.placeholder.com/400x400?text=No+Image+Available";
+
   return (
-    <Link to={`/${props.ArtworkId}`}>
-      <div
-        onMouseOver={() => setIsOvered(true)}
-        onMouseOut={() => setIsOvered(false)}
-        style={{
-          backgroundColor: isOvered
-            ? "rgba(105, 105, 105, 0.633)"
-            : "transparent",
-        }}
+    <Link to={`/${ArtworkId}`} className={styles.link}>
+      <Card
         className={styles.card}
+        style={{
+          backgroundColor: isHovered ? "rgba(105, 105, 105, 0.633)" : "white",
+        }}
+        onMouseOver={() => setIsHovered(true)}
+        onMouseOut={() => setIsHovered(false)}
       >
-        <img
-          src={Artwork?.primaryImageSmall}
-          alt={Artwork?.title}
+        <CardMedia
+          component="img"
+          image={imageUrl}
+          alt={Artwork.title}
           className={styles.img}
         />
-        <CardContent>
-          <Typography variant="h5" component="h2">
-            {Artwork?.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {Artwork?.artistDisplayName}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {Artwork?.objectDate}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {Artwork?.dimensions}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {Artwork?.department}
-          </Typography>
+        <CardContent className={styles.content}>
+          <Box mb={2}>
+            <Typography variant="h5" component="h2" className={styles.ellipsis}>
+              {Artwork.title}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={styles.ellipsis}
+            >
+              {Artwork.artistDisplayName || "Inconnu"}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={styles.ellipsis}
+            >
+              {Artwork.objectDate || "Inconnue"}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={styles.ellipsis}
+            >
+              {Artwork.department || "Inconnues"}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              className={styles.ellipsis}
+            >
+              {Artwork.medium || "Inconnu"}
+            </Typography>
+          </Box>
         </CardContent>
-      </div>
+      </Card>
     </Link>
   );
 }

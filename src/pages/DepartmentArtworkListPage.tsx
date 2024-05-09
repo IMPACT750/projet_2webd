@@ -1,52 +1,45 @@
 import { ArtworkCard } from "../components/ArtworkCard/ArtworkCard";
 import { useState, useEffect } from "react";
-import { Pagination, Grid, Typography, Box } from "@mui/material";
-import { useSearchQuery } from "../queries/Search/useSearch";
+import { Pagination, Grid, Box } from "@mui/material";
+import { useArtworkInDepartmentQuery } from "../queries/department/useArtworkInDepartment";
 import { useParams } from "react-router-dom";
 
-export function SearchPage() {
-  const queries = useParams();
+export function DepartmentArtworkListPage() {
   const [ArtorkIdUse, setArtorkIdUse] = useState<number[]>([]);
   const [offset, setOffset] = useState(0);
   const limit = 9;
-  const ArtworkIds = useSearchQuery(queries.searchTerm!);
+  const { departmentId } = useParams();
+  const ArtworkIds = useArtworkInDepartmentQuery(Number(departmentId));
+
 
   useEffect(() => {
-    if (ArtworkIds.isLoading) {
+    if (ArtworkIds.isLoading || ArtworkIds.isError) {
       return;
     }
 
-    if (ArtworkIds.isError) {
-      return;
+    const objectIDs = ArtworkIds.data?.objectIDs;
+    if (objectIDs) {
+      setArtorkIdUse(objectIDs.slice(offset, offset + limit));
     }
+  }, [offset, limit, ArtworkIds.data, ArtworkIds.isError, ArtworkIds.isLoading]);
 
-    if (ArtworkIds.data) {
-      setArtorkIdUse(ArtworkIds.data.objectIDs.slice(offset, offset + limit));
-    }
-  }, [
-    offset,
-    limit,
-    ArtworkIds.data,
-    ArtworkIds.isError,
-    ArtworkIds.isLoading,
-  ]);
   if (ArtworkIds.isLoading) {
-    return <div>Chargement...</div>;
+    return <div>Loading...</div>;
   }
 
   if (ArtworkIds.isError) {
-    return <div>Erreur</div>;
+    return <div>Error</div>;
   }
+
+  const objectIDsLength = ArtworkIds.data?.objectIDs?.length;
+  const pageCount = objectIDsLength ? Math.ceil(objectIDsLength / limit) : 0;
 
   return (
     <>
-      <Typography variant="h5" component="h2">
-        {queries.searchTerm!}
-      </Typography>
 
       <Grid container spacing={3} wrap="wrap" marginTop="4rem">
         {ArtorkIdUse.map((id) => (
-          <Grid item xs={12} sm={8} md={4} key={id}>
+          <Grid item xs={12} sm={6} md={4} key={id}>
             <Box height="100%" display="flex" alignItems="stretch">
               <ArtworkCard ArtworkId={id} />
             </Box>
@@ -57,7 +50,7 @@ export function SearchPage() {
       <Box display="flex" justifyContent="center" marginTop="4rem">
         <Pagination
           color="secondary"
-          count={Math.ceil(ArtworkIds.data!.objectIDs.length / limit)}
+          count={pageCount}
           onChange={(_event, page) => {
             setOffset((page - 1) * limit);
           }}
