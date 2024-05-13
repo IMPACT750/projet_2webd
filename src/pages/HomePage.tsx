@@ -26,7 +26,21 @@ export function HomePage() {
 
   return (
     <>
-      <Typography variant="h5" component="h2">
+     <Typography variant="h5" component="h2" marginTop="4rem">
+        Œuvres d'art en vedette
+      </Typography>
+
+      <Grid container spacing={3} wrap="wrap" marginTop="4rem">
+        {artworkIdisHighlight.data!.objectIDs.map((id) => (
+          <Grid item xs={12} sm={8} md={4} key={id}>
+            <Box height="100%" display="flex" alignItems="stretch">
+              <ArtworkCard ArtworkId={id} />
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Typography variant="h5" component="h2" marginTop="4rem">
         Liste des départements
       </Typography>
       <Grid container spacing={3} marginTop="4rem">
@@ -40,19 +54,7 @@ export function HomePage() {
         ))}
       </Grid>
 
-      <Typography variant="h5" component="h2" marginTop="4rem">
-        Œuvres d'art en vedette
-      </Typography>
-
-      <Grid container spacing={3} wrap="wrap" marginTop="4rem">
-        {artworkIdisHighlight.data!.objectIDs.map((id) => (
-          <Grid item xs={12} sm={8} md={4} key={id}>
-            <Box height="100%" display="flex" alignItems="stretch">
-              <ArtworkCard ArtworkId={id} />
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+     
     </>
   );
 }
