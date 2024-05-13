@@ -3,7 +3,7 @@ import { DepartmentData } from "../../type/DepartmentType";
 
 export function useDepartmentsQuery() {
   return useQuery({
-    queryKey: ["ArtworkId"],
+    queryKey: ["Departments"],
     queryFn: async () => {
       const response = await fetch(
         `https://collectionapi.metmuseum.org/public/collection/v1/departments`);
