@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useDepartmentsQuery } from "../queries/department/useDepartments";
 import { DepartmentCard } from "../components/DepartmentCard/DepartmentCard";
-import { useArtworkIdisHighlightQuery } from "../queries/Artwork/useArtworkIdisHighlight";
+import { useArtworkIdisHighlightQuery } from "../queries/Artwork/useArtworkIdIsHighlight";
 import { ArtworkCard } from "../components/ArtworkCard/ArtworkCard";
 
 export function HomePage() {
