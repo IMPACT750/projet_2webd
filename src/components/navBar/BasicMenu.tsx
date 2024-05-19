@@ -18,6 +18,7 @@ export default function BasicMenu() {
   const [medium, setMedium] = useState("");
   const [dateBegin, setDateBegin] = useState("");
   const [dateEnd, setDateEnd] = useState("");
+  const [objectDate, setObjectDate] = useState<string>("");
   const navigate = useNavigate();
   const departments = useDepartmentsQuery();
 
@@ -40,6 +41,9 @@ export default function BasicMenu() {
     if (dateEnd) {
       queryString += `dateEnd=${dateEnd}&`;
     }
+    if (objectDate) {
+      queryString += `objectDate=${objectDate}&`;
+    }
     if (author) {
       queryString += `q=${author}&`;
     } else {
@@ -56,6 +60,7 @@ export default function BasicMenu() {
     setMedium("");
     setDateBegin("");
     setDateEnd("");
+    setObjectDate("");
   };
 
   return (
@@ -127,6 +132,14 @@ export default function BasicMenu() {
             variant="standard"
             value={dateEnd}
             onChange={(e) => setDateEnd(e.target.value)}
+          />
+
+          <TextField
+            id="objectDate"
+            label="Date de l'objet"
+            variant="standard"
+            value={objectDate}
+            onChange={(e) => setObjectDate(e.target.value)}
           />
         </div>
         <Button onClick={handleClose}>Rechercher</Button>
