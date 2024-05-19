@@ -22,10 +22,21 @@ export function DepartmentCard({ departmentId, displayName }: DepartmentProps) {
         onMouseOut={() => setIsHovered(false)}
       >
         <CardContent>
-          <Typography component="h4" className={styles.ellipsis}>
+          <Typography
+            variant="h4"
+            component="h2"
+            className={styles.ellipsis}
+            style={{
+              fontFamily: "Roboto",
+              fontWeight: 700,
+              letterSpacing: "0.5px",
+              color: "#333",
+              fontSize: "18px",
+            }}
+          >
             {displayName}
           </Typography>
-          <Typography variant="body2" color="text.secondary"></Typography>
+          {/* Ajoutez d'autres éléments Typography selon vos besoins */}
         </CardContent>
       </Card>
     </Link>

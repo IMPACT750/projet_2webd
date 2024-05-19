@@ -48,13 +48,28 @@ export function ArtworkCard({ ArtworkId }: ArtworkProps) {
         />
         <CardContent className={styles.content}>
           <Box mb={2}>
-            <Typography variant="h5" component="h2" className={styles.ellipsis}>
+            <Typography
+              variant="h5"
+              component="h2"
+              className={styles.ellipsis}
+              style={{
+                fontFamily: "Roboto",
+                fontWeight: 700,
+                letterSpacing: "0.5px",
+                color: "#333",
+              }}
+            >
               {Artwork.title}
             </Typography>
             <Typography
               variant="body2"
               color="textSecondary"
               className={styles.ellipsis}
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: "14px",
+                color: "#666",
+              }}
             >
               {Artwork.artistDisplayName || "Inconnu"}
             </Typography>
@@ -62,6 +77,11 @@ export function ArtworkCard({ ArtworkId }: ArtworkProps) {
               variant="body2"
               color="textSecondary"
               className={styles.ellipsis}
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: "14px",
+                color: "#666",
+              }}
             >
               {Artwork.objectDate || "Inconnue"}
             </Typography>
@@ -69,6 +89,11 @@ export function ArtworkCard({ ArtworkId }: ArtworkProps) {
               variant="body2"
               color="textSecondary"
               className={styles.ellipsis}
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: "14px",
+                color: "#666",
+              }}
             >
               {Artwork.department || "Inconnues"}
             </Typography>
@@ -76,6 +101,11 @@ export function ArtworkCard({ ArtworkId }: ArtworkProps) {
               variant="body2"
               color="textSecondary"
               className={styles.ellipsis}
+              style={{
+                fontFamily: "Montserrat",
+                fontSize: "14px",
+                color: "#666",
+              }}
             >
               {Artwork.medium || "Inconnu"}
             </Typography>
