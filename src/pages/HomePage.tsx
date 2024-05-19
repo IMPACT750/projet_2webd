@@ -3,8 +3,6 @@ import { useDepartmentsQuery } from "../queries/department/useDepartments";
 import { DepartmentCard } from "../components/DepartmentCard/DepartmentCard";
 import { useArtworkIdisHighlightQuery } from "../queries/Artwork/useArtworkIdIsHighlight";
 import { ArtworkCard } from "../components/ArtworkCard/ArtworkCard";
-import Carousel from "react-material-ui-carousel";
-import styles from "./homePage.module.css";
 
 export function HomePage() {
   const departments = useDepartmentsQuery();
@@ -29,15 +27,15 @@ export function HomePage() {
         Œuvres d'art en vedette
       </Typography>
 
-      <Box className={styles.carouselContainer}>
-        <Carousel>
-          {artworkIdisHighlight.data!.objectIDs.map((id) => (
-            <div key={id} className={styles.carouselItem}>
+      <Grid container spacing={3} marginTop="2rem">
+        {artworkIdisHighlight.data!.objectIDs.map((id) => (
+          <Grid item xs={12} sm={8} md={4} key={id}>
+            <Box height="100%" display="flex" alignItems="stretch">
               <ArtworkCard ArtworkId={id} />
-            </div>
-          ))}
-        </Carousel>
-      </Box>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
 
       <Typography
         variant="h4"
