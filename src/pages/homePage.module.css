@@ -1,0 +1,15 @@
+.carouselContainer {
+  margin-top: 2rem;
+}
+
+.carouselItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselImage {
+  width: 100%; /* Take full width of the parent */
+  height: auto;
+  max-width: 1000px; /* Optional: Set a maximum width */
+}
