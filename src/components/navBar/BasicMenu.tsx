@@ -28,11 +28,6 @@ export default function BasicMenu() {
 
   const handleClose = () => {
     let queryString = "";
-    if (author) {
-      queryString += `q=${author}&`;
-    } else {
-      queryString += `q=&`;
-    }
     if (department) {
       queryString += `departmentId=${department}&`;
     }
@@ -45,7 +40,11 @@ export default function BasicMenu() {
     if (dateEnd) {
       queryString += `dateEnd=${dateEnd}&`;
     }
-
+    if (author) {
+      queryString += `q=${author}&`;
+    } else {
+      queryString += `q=&`;
+    }
     if (queryString.endsWith("&")) {
       queryString = queryString.slice(0, -1);
     }
